@@ -1,14 +1,15 @@
 #!/bin/bash
 
-BRANCH=""
+BRANCH="main"
 PUSH=0
 
-#function help() {
-	#cat << END
-	#-b | --branch    check & update branch
-	#END
-#}
+function help() {
+	echo "-h | --help       get more information"
+	echo "-b | --branch     check/update the branch, default main"
+	echo "-p | --push       push the newest version to repo"
+}
 
+# check have upstream remote branch
 function remote_repo() {
 	local remote_v="`git remote -v`"
 	local upstream=0
@@ -70,6 +71,7 @@ do
 		-h|--help)
 			help
 			shift
+			exit 0
 			;;
 		*)
 			echo "invalid argument"
