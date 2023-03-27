@@ -24,6 +24,13 @@ function remote_repo() {
 	echo $upstream
 }
 
+function remove_branch() {
+	# only remain the master/main branch
+	if [ $BRANCH = "all" ]; then
+		git for-each-ref --format '%(refname:short)' refs/heads | grep -v "master\|main" | xargs git branch -D
+	fi
+}
+
 function main() {
 	# check not have any staged files
 	if [ "`git diff --name-only`" != "" ];
@@ -72,6 +79,11 @@ do
 			help
 			shift
 			exit 0
+			;;
+		-rm-branch)
+			BRANCH=$2
+			shift
+			shift
 			;;
 		*)
 			echo "invalid argument"
